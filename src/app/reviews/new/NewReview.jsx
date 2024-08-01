@@ -13,7 +13,6 @@ import authNodeApi from '@/utils/authApi';
 const api = authNodeApi();
 const NewReview = (props) => {
   const{isEditing,setIsEditing,selectedReviewData,onClose}= props;
-  const loggedUser = JSON.parse(localStorage.getItem('user'));
   const router = useRouter();
 
   const{control,handleSubmit,formState:{errors,isDirty},reset} = useForm({
@@ -22,7 +21,6 @@ const NewReview = (props) => {
       review:'',
       rating:'',
       author:'',
-      userId:loggedUser?.userId,
     }
   });
   const submitReview = async (data) => {
