@@ -24,7 +24,7 @@ const Reviews = () => {
   useEffect(() => {
     fetchReviews();
   }, []);
-  const [value, setValue] = useState(0);
+  
   const columns=[
     { 
       field: 'id',

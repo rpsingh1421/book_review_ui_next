@@ -45,7 +45,7 @@ const Login = () => {
   };
   return (
     <Box className='h-[100vh] flex items-center justify-center'>
-      <Paper className='w-[50%] h-auto'>
+      <Paper className='w-full md:w-[50%] md:h-auto rounded-3xl border-y-2 border-gray-500'>
         <Box className='my-[2%] text-center'>
         <Typography className='text-center font-semibold text-3xl'>Sign In</Typography>
         </Box>
@@ -121,7 +121,6 @@ const Login = () => {
             <Button disabled={!isDirty} size='small' variant='contained' color='primary' type='submit'> Sign in</Button>
             <Button size='small' variant='contained' color='error'> cancel</Button>
           </Box>
-          
         </Box>
 
         <Box className='flex items-center justify-center my-[2%] gap-[2%]'>
