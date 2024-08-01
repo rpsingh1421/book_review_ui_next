@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const defaultNodeApi = () => {
   const api = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://book-review-backend-node.onrender.com',
     headers: {
       // 'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
