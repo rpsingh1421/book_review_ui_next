@@ -8,17 +8,22 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Delete, Edit } from '@mui/icons-material';
 import NewReview from './new/NewReview';
 import AuthLayout from '../component/AuthLayout';
+import TableLoadingSkeleton from '../component/layout/TableLoadingSkeleton';
+import NoRowsLayout from '../component/layout/NoRowsLayout';
 
 const authApi = authNodeApi();
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
+  const [isLoading,setIsLoading] = useState(true);
   const fetchReviews = async () => {
     try {
       const res = await authApi.get('/api/reviews');
       console.log("reviews response:",res)
       setReviews(res.data);
+      setIsLoading(false)
     } catch (err) {
       console.error(err);
+      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -139,6 +144,11 @@ const Reviews = () => {
             maxHeight: 'none !important',
           },
         }}
+        slots={{
+          noRowsOverlay: NoRowsLayout,
+          loadingOverlay: TableLoadingSkeleton,
+        }}
+        loading={isLoading}
       />
       </Box>
       {openReviewForm && <NewReview isEditing={isEditing} setIsEditing={setIsEditing} selectedReviewData={selectedReviewData}
