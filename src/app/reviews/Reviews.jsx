@@ -10,11 +10,35 @@ import NewReview from './new/NewReview';
 import AuthLayout from '../component/AuthLayout';
 import TableLoadingSkeleton from '../component/layout/TableLoadingSkeleton';
 import NoRowsLayout from '../component/layout/NoRowsLayout';
+import useSocket from '../component/hooks/useSocket';
 
 const authApi = authNodeApi();
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [isLoading,setIsLoading] = useState(true);
+
+  // ==================================
+  const socket = useSocket();
+
+  // const fetchReviews = async () => {
+  //   try {
+  //     const res = await authApi.get('/api/reviews');
+  //     setReviews(res.data);
+  //     setIsLoading(false);
+  //   } catch (err) {
+  //     console.error(err);
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const handleDelete = async (id) => {
+    await authApi.delete(`/api/reviews/${id}`);
+    fetchReviews();
+    if (socket) {
+      socket.emit('reviewDeleted', id);
+    }
+  };
+  // ==================================
   const fetchReviews = async () => {
     try {
       const res = await authApi.get('/api/reviews');

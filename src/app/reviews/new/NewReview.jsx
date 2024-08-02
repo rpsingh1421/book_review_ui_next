@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { Close } from '@mui/icons-material';
 import defaultNodeApi from '@/utils/api';
 import authNodeApi from '@/utils/authApi';
+import useSocket from '@/app/component/hooks/useSocket';
 
 
 const api = authNodeApi();
@@ -23,12 +24,18 @@ const NewReview = (props) => {
       author:'',
     }
   });
+  // ================
+  const socket = useSocket();
   const submitReview = async (data) => {
     // e.preventDefault();
     console.log("submitted data:",data);
     if(isEditing){
       try {
         const updateResponse = await api.put(`/api/reviews/${data._id}`,data);
+        console.log("updated response:",updateResponse)
+        if (socket) {
+          socket.emit('reviewEdited', updateResponse.data);
+        }
         onClose();
       } catch (error) {
         console.log("something went wrong:",error)
@@ -36,6 +43,10 @@ const NewReview = (props) => {
     }else{
       try {
         const createResponse = await api.post('/api/reviews',data);
+        console.log("created response:",createResponse)
+        if (socket) {
+          socket.emit('reviewAdded', createResponse.data);
+        }
         onClose();
       } catch (error) {
         console.log("something went wrong:",error)

@@ -20,6 +20,7 @@ const Register = () => {
   const [userData,setUserData] = useState(userInitial);
   const {control,handleSubmit,formState:{errors}} = useForm();
   const submitRegistrationData = async (data) => {
+    console.log("registration data:",data)
     try {
       const response =await api.post('/api/auth/register', data)
       
